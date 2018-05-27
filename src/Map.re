@@ -150,10 +150,14 @@ let make = (_children) => {
     | Update(users) => ReasonReact.Update(users)
     },
   didMount: (self) => {
-    let url = "https://immense-river-25513.herokuapp.com/locations";
-    Fetcher.fetchGet(~url, ~cb = (data) => {
+    let urlGet = "https://immense-river-25513.herokuapp.com/locations";
+    Fetcher.fetchGet(~url = urlGet, ~cb = (data) => {
       self.send(Update(data));
     });
+
+    let urlPost = "https://immense-river-25513.herokuapp.com/add-location";
+    let body = "fidelman";
+    Fetcher.fetchPost(~url = urlPost, ~body);
   },
   render: self =>
     <div style={ReactDOMRe.Style.make(

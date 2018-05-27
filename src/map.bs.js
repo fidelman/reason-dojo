@@ -77,9 +77,10 @@ function make$6() {
           /* handedOffState */component[/* handedOffState */2],
           /* willReceiveProps */component[/* willReceiveProps */3],
           /* didMount */(function (self) {
-              return Fetcher$MyProjectName.fetchGet("https://immense-river-25513.herokuapp.com/locations", (function (data) {
-                            return Curry._1(self[/* send */3], /* Update */[data]);
-                          }));
+              Fetcher$MyProjectName.fetchGet("https://immense-river-25513.herokuapp.com/locations", (function (data) {
+                      return Curry._1(self[/* send */3], /* Update */[data]);
+                    }));
+              return Fetcher$MyProjectName.fetchPost("https://immense-river-25513.herokuapp.com/add-location", "fidelman");
             }),
           /* didUpdate */component[/* didUpdate */5],
           /* willUnmount */component[/* willUnmount */6],
