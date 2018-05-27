@@ -61,7 +61,13 @@ function make$4() {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
-              return React.createElement("div", undefined, ReasonReact.element(/* None */0, /* None */0, make(551, 980, {
+              return React.createElement("div", {
+                          style: {
+                            margin: "0 auto",
+                            maxWidth: "980",
+                            width: "100%"
+                          }
+                        }, ReasonReact.element(/* None */0, /* None */0, make(551, 980, {
                                   scale: 205,
                                   rotation: /* tuple */[
                                     -11,

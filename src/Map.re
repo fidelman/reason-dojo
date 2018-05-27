@@ -106,7 +106,12 @@ let component = ReasonReact.statelessComponent("Map");
 let make = (_children) => {
   ...component,
   render: _self =>
-    <div>
+    <div style={ReactDOMRe.Style.make(
+      ~width = "100%",
+      ~maxWidth = "980",
+      ~margin = "0 auto",
+      ()
+    )}>
       <ComposableMap
         width={980}
         height={551}
