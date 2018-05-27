@@ -80,7 +80,7 @@ function make$4() {
                                 }, /* array */[ReasonReact.element(/* None */0, /* None */0, make$1(/* tuple */[
                                             0,
                                             20
-                                          ], true, /* array */[ReasonReact.element(/* None */0, /* None */0, make$2("/static/world-50m.json", /* array */[(function (geographies, projection) {
+                                          ], true, /* array */[ReasonReact.element(/* None */0, /* None */0, make$2("/world-50m.json", /* array */[(function (geographies, projection) {
                                                           return $$Array.mapi((function (i, geography) {
                                                                         return ReasonReact.element(/* Some */[String(i)], /* None */0, make$3(geography, projection, {
                                                                                         default: {

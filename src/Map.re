@@ -128,7 +128,7 @@ let make = (_children) => {
           center={(0, 20)}
           disablePanning={true}
         >
-          <Geographies geography="/static/world-50m.json">
+          <Geographies geography="/world-50m.json">
             {(geographies, projection) => Array.mapi((i, geography) => {
               <Geography
                 key={string_of_int(i)}
