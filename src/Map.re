@@ -102,6 +102,40 @@ module Geography = {
     )
 }
 
+module Markers = {
+  [@bs.module "react-simple-maps"]
+  external markers : ReasonReact.reactClass = "Markers";
+  let make = (children) =>
+    ReasonReact.wrapJsForReason(
+      ~reactClass=markers,
+      ~props = Js.Obj.empty,
+      children
+    )
+}
+
+module Marker = {
+  [@bs.deriving abstract]
+  type markerT = {
+    coordinates: (float, float)
+  };
+
+  [@bs.deriving abstract]
+  type props = {
+    marker: markerT
+  };
+
+  [@bs.module "react-simple-maps"]
+  external js : ReasonReact.reactClass = "Marker";
+  let make = (~marker, children) =>
+    ReasonReact.wrapJsForReason(
+      ~reactClass=js,
+      ~props=props(
+        ~marker=markerT(~coordinates=coordinates(marker)),
+      ),
+      children
+    )
+};
+
 type state = array(Fetcher.data);
 
 type actions = | Update(array(Fetcher.data));
@@ -117,11 +151,11 @@ let make = (_children) => {
     },
   didMount: (self) => {
     let url = "https://immense-river-25513.herokuapp.com/locations";
-    Fetcher.fetchGet(url, (data) => {
+    Fetcher.fetchGet(~url, ~cb = (data) => {
       self.send(Update(data));
     });
   },
-  render: _self =>
+  render: self =>
     <div style={ReactDOMRe.Style.make(
       ~width = "100%",
       ~maxWidth = "980",
@@ -173,6 +207,16 @@ let make = (_children) => {
               />
             }, geographies)}
           </Geographies>
+          <Markers>
+            {Array.mapi((i, user: Fetcher.data) => {
+              let (lat, lng) = Fetcher.location(user);
+              <Marker key={string_of_int(i)} marker={Marker.markerT(
+                ~coordinates=(lng, lat)
+              )}>
+                <circle cx={"0"} cy={"0"} r={"2"} />
+              </Marker>
+            }, self.state)}
+          </Markers>
         </ZoomableGroup>
       </ComposableMap>
     </div>,

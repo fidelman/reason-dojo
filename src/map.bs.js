@@ -50,9 +50,27 @@ function make$3(geography, projection, style, children) {
 
 var Geography = /* module */[/* make */make$3];
 
+function make$4(children) {
+  return ReasonReact.wrapJsForReason(ReactSimpleMaps.Markers, (function () {
+                return { };
+              }), children);
+}
+
+var Markers = /* module */[/* make */make$4];
+
+function make$5(marker, children) {
+  return ReasonReact.wrapJsForReason(ReactSimpleMaps.Marker, {
+              marker: {
+                coordinates: marker.coordinates
+              }
+            }, children);
+}
+
+var Marker = /* module */[/* make */make$5];
+
 var component = ReasonReact.reducerComponent("Map");
 
-function make$4() {
+function make$6() {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -67,7 +85,7 @@ function make$4() {
           /* willUnmount */component[/* willUnmount */6],
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
-          /* render */(function () {
+          /* render */(function (self) {
               return React.createElement("div", {
                           style: {
                             margin: "0 auto",
@@ -87,7 +105,8 @@ function make$4() {
                                 }, /* array */[ReasonReact.element(/* None */0, /* None */0, make$1(/* tuple */[
                                             0,
                                             20
-                                          ], true, /* array */[ReasonReact.element(/* None */0, /* None */0, make$2("/world-50m.json", /* array */[(function (geographies, projection) {
+                                          ], true, /* array */[
+                                            ReasonReact.element(/* None */0, /* None */0, make$2("/world-50m.json", /* array */[(function (geographies, projection) {
                                                           return $$Array.mapi((function (i, geography) {
                                                                         return ReasonReact.element(/* Some */[String(i)], /* None */0, make$3(geography, projection, {
                                                                                         default: {
@@ -110,7 +129,21 @@ function make$4() {
                                                                                         }
                                                                                       }, /* array */[]));
                                                                       }), geographies);
-                                                        })]))]))])));
+                                                        })])),
+                                            ReasonReact.element(/* None */0, /* None */0, make$4(/* array */[$$Array.mapi((function (i, user) {
+                                                              var match = user.location;
+                                                              return ReasonReact.element(/* Some */[String(i)], /* None */0, make$5({
+                                                                              coordinates: /* tuple */[
+                                                                                match[1],
+                                                                                match[0]
+                                                                              ]
+                                                                            }, /* array */[React.createElement("circle", {
+                                                                                    cx: "0",
+                                                                                    cy: "0",
+                                                                                    r: "2"
+                                                                                  })]));
+                                                            }), self[/* state */1])]))
+                                          ]))])));
             }),
           /* initialState */(function () {
               return /* array */[];
@@ -128,6 +161,8 @@ exports.ComposableMap = ComposableMap;
 exports.ZoomableGroup = ZoomableGroup;
 exports.Geographies = Geographies;
 exports.Geography = Geography;
+exports.Markers = Markers;
+exports.Marker = Marker;
 exports.component = component;
-exports.make = make$4;
+exports.make = make$6;
 /* component Not a pure module */
