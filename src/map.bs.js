@@ -68,18 +68,42 @@ function make$5(marker, children) {
 
 var Marker = /* module */[/* make */make$5];
 
+function make$6(children) {
+  return ReasonReact.wrapJsForReason(ReactSimpleMaps.Annotations, (function () {
+                return { };
+              }), children);
+}
+
+var Annotations = /* module */[/* make */make$6];
+
+function make$7(subject, dx, dy, strokeWidth, children) {
+  return ReasonReact.wrapJsForReason(ReactSimpleMaps.Annotation, {
+              subject: subject,
+              dx: dx,
+              dy: dy,
+              strokeWidth: strokeWidth
+            }, children);
+}
+
+var Annotation = /* module */[/* make */make$7];
+
 var component = ReasonReact.reducerComponent("Map");
 
-function make$6() {
+function make$8() {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
           /* handedOffState */component[/* handedOffState */2],
           /* willReceiveProps */component[/* willReceiveProps */3],
           /* didMount */(function (self) {
-              Fetcher$MyProjectName.fetchGet("https://immense-river-25513.herokuapp.com/locations", (function (data) {
-                      return Curry._1(self[/* send */3], /* Update */[data]);
-                    }));
+              var fetch = function () {
+                return Fetcher$MyProjectName.fetchGet("https://immense-river-25513.herokuapp.com/locations", (function (data) {
+                              Curry._1(self[/* send */3], /* Update */[data]);
+                              setTimeout(fetch, 5000);
+                              return /* () */0;
+                            }));
+              };
+              fetch(/* () */0);
               return Fetcher$MyProjectName.fetchPost("https://immense-river-25513.herokuapp.com/add-location", "fidelman");
             }),
           /* didUpdate */component[/* didUpdate */5],
@@ -141,8 +165,16 @@ function make$6() {
                                                                             }, /* array */[React.createElement("circle", {
                                                                                     cx: "0",
                                                                                     cy: "0",
-                                                                                    r: "2"
+                                                                                    fill: "red",
+                                                                                    r: "3"
                                                                                   })]));
+                                                            }), self[/* state */1])])),
+                                            ReasonReact.element(/* None */0, /* None */0, make$6(/* array */[$$Array.mapi((function (i, user) {
+                                                              var match = user.location;
+                                                              return ReasonReact.element(/* Some */[String(i)], /* None */0, make$7(/* tuple */[
+                                                                              match[1],
+                                                                              match[0]
+                                                                            ], -30, 30, 1, /* array */[React.createElement("text", undefined, user.username)]));
                                                             }), self[/* state */1])]))
                                           ]))])));
             }),
@@ -164,6 +196,8 @@ exports.Geographies = Geographies;
 exports.Geography = Geography;
 exports.Markers = Markers;
 exports.Marker = Marker;
+exports.Annotations = Annotations;
+exports.Annotation = Annotation;
 exports.component = component;
-exports.make = make$6;
+exports.make = make$8;
 /* component Not a pure module */

@@ -136,6 +136,41 @@ module Marker = {
     )
 };
 
+module Annotations = {
+  [@bs.module "react-simple-maps"]
+  external annotations : ReasonReact.reactClass = "Annotations";
+  let make = (children) =>
+    ReasonReact.wrapJsForReason(
+      ~reactClass=annotations,
+      ~props = Js.Obj.empty,
+      children
+    )
+};
+
+module Annotation = {
+  [@bs.deriving abstract]
+  type props = {
+    subject: (float, float),
+    dx: int,
+    dy: int,
+    strokeWidth: int
+  };
+
+  [@bs.module "react-simple-maps"]
+  external annotation : ReasonReact.reactClass = "Annotation";
+  let make = (~subject, ~dx, ~dy, ~strokeWidth, children) =>
+    ReasonReact.wrapJsForReason(
+      ~reactClass=annotation,
+      ~props=props(
+        ~subject,
+        ~dx,
+        ~dy,
+        ~strokeWidth
+      ),
+      children
+    )
+};
+
 type state = array(Fetcher.data);
 
 type actions = | Update(array(Fetcher.data));
@@ -150,10 +185,20 @@ let make = (_children) => {
     | Update(users) => ReasonReact.Update(users)
     },
   didMount: (self) => {
+    /* TODO: Set Interval */
     let urlGet = "https://immense-river-25513.herokuapp.com/locations";
-    Fetcher.fetchGet(~url = urlGet, ~cb = (data) => {
-      self.send(Update(data));
-    });
+
+    let rec fetch = () => {
+      Fetcher.fetchGet(~url = urlGet, ~cb = (data) => {
+        self.send(Update(data));
+
+        Js.Global.setTimeout(fetch, 5000) |> ignore;
+      });
+    };
+
+    fetch();
+
+    
 
     let urlPost = "https://immense-river-25513.herokuapp.com/add-location";
     let body = "fidelman";
@@ -217,10 +262,26 @@ let make = (_children) => {
               <Marker key={string_of_int(i)} marker={Marker.markerT(
                 ~coordinates=(lng, lat)
               )}>
-                <circle cx={"0"} cy={"0"} r={"2"} />
+                <circle fill={"red"} cx={"0"} cy={"0"} r={"3"} />
               </Marker>
             }, self.state)}
           </Markers>
+          <Annotations>
+            {Array.mapi((i, user: Fetcher.data) => {
+                let (lat, lng) = Fetcher.location(user);
+                <Annotation
+                  key={string_of_int(i)}
+                  dx={-30}
+                  dy={30}
+                  subject={(lng, lat)}
+                  strokeWidth={1}
+                  >
+                  <text>
+                    {ReasonReact.string(Fetcher.username(user))}
+                  </text>
+                </Annotation>
+              }, self.state)}
+          </Annotations>
         </ZoomableGroup>
       </ComposableMap>
     </div>,
