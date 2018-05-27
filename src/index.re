@@ -1,0 +1,1 @@
+ReactDOMRe.renderToElementWithId(<Map message="Hello!" />, "main");
