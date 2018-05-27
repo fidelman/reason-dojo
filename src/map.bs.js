@@ -3,10 +3,52 @@
 
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
+var ReactSimpleMaps = require("react-simple-maps");
+
+function make(height, width, projectionConfig, style, children) {
+  return ReasonReact.wrapJsForReason(ReactSimpleMaps.ComposableMap, {
+              height: height,
+              width: width,
+              projectionConfig: {
+                scale: projectionConfig.scale,
+                rotation: projectionConfig.rotation
+              },
+              style: style
+            }, children);
+}
+
+var ComposableMap = /* module */[/* make */make];
+
+function make$1(center, disablePanning, children) {
+  return ReasonReact.wrapJsForReason(ReactSimpleMaps.ZoomableGroup, {
+              center: center,
+              disablePanning: disablePanning
+            }, children);
+}
+
+var ZoomableGroup = /* module */[/* make */make$1];
+
+function make$2(geography, children) {
+  return ReasonReact.wrapJsForReason(ReactSimpleMaps.Geographies, {
+              geography: geography
+            }, children);
+}
+
+var Geographies = /* module */[/* make */make$2];
+
+function make$3(geography, projection, style, children) {
+  return ReasonReact.wrapJsForReason(ReactSimpleMaps.Geography, {
+              geography: geography,
+              projection: projection,
+              style: style
+            }, children);
+}
+
+var Geography = /* module */[/* make */make$3];
 
 var component = ReasonReact.statelessComponent("Map");
 
-function make(message, _) {
+function make$4() {
   return /* record */[
           /* debugName */component[/* debugName */0],
           /* reactClassInternal */component[/* reactClassInternal */1],
@@ -18,7 +60,20 @@ function make(message, _) {
           /* willUpdate */component[/* willUpdate */7],
           /* shouldUpdate */component[/* shouldUpdate */8],
           /* render */(function () {
-              return React.createElement("div", undefined, message);
+              return React.createElement("div", undefined, ReasonReact.element(/* None */0, /* None */0, make(551, 980, {
+                                  scale: 205,
+                                  rotation: /* tuple */[
+                                    -11,
+                                    0,
+                                    0
+                                  ]
+                                }, {
+                                  height: "auto",
+                                  width: "100%"
+                                }, /* array */[ReasonReact.element(/* None */0, /* None */0, make$1(/* tuple */[
+                                            0,
+                                            20
+                                          ], true, /* array */[ReasonReact.element(/* None */0, /* None */0, make$2("/static/world-50m.json", /* array */[]))]))])));
             }),
           /* initialState */component[/* initialState */10],
           /* retainedProps */component[/* retainedProps */11],
@@ -28,6 +83,10 @@ function make(message, _) {
         ];
 }
 
+exports.ComposableMap = ComposableMap;
+exports.ZoomableGroup = ZoomableGroup;
+exports.Geographies = Geographies;
+exports.Geography = Geography;
 exports.component = component;
-exports.make = make;
+exports.make = make$4;
 /* component Not a pure module */

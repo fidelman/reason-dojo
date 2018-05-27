@@ -1,1 +1,1 @@
-ReactDOMRe.renderToElementWithId(<Map message="Hello!" />, "main");
+ReactDOMRe.renderToElementWithId(<Map />, "main");
