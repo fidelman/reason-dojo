@@ -75,10 +75,17 @@ module Geography = {
   type projectionT;
   
   [@bs.deriving abstract]
+  type styleT = {
+    default: ReactDOMRe.Style.t,
+    hover: ReactDOMRe.Style.t,
+    pressed: ReactDOMRe.Style.t
+  };
+
+  [@bs.deriving abstract]
   type props = {
     geography: geographyT,
     projection: projectionT,
-    style: ReactDOMRe.Style.t
+    style: styleT
   };
 
   [@bs.module "react-simple-maps"]
@@ -117,7 +124,33 @@ let make = (_children) => {
           disablePanning={true}
         >
           <Geographies geography="/static/world-50m.json">
-
+            {(geographies, projection) => Array.mapi((i, geography) => {
+              <Geography
+                key={string_of_int(i)}
+                geography={geography}
+                projection={projection}
+                style={Geography.styleT(
+                  ~default=ReactDOMRe.Style.make(
+                    ~fill = "#ECEFF1",
+                    ~stroke = "#607D8B",
+                    ~strokeWidth = "0.75",
+                    ~outline = "none",
+                  ()),
+                  ~hover=ReactDOMRe.Style.make(
+                    ~fill = "#607D8B",
+                    ~stroke = "#607D8B",
+                    ~strokeWidth = "0.75",
+                    ~outline = "none",
+                  ()),
+                  ~pressed=ReactDOMRe.Style.make(
+                    ~fill = "#FF5722",
+                    ~stroke = "#607D8B",
+                    ~strokeWidth = "0.75",
+                    ~outline = "none",
+                  ())
+                )}
+              />
+            }, geographies)}
           </Geographies>
         </ZoomableGroup>
       </ComposableMap>
