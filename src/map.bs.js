@@ -2,9 +2,12 @@
 'use strict';
 
 var $$Array = require("bs-platform/lib/js/array.js");
+var Block = require("bs-platform/lib/js/block.js");
+var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var ReactSimpleMaps = require("react-simple-maps");
+var Fetcher$MyProjectName = require("./Fetcher.bs.js");
 
 function make(height, width, projectionConfig, style, children) {
   return ReasonReact.wrapJsForReason(ReactSimpleMaps.ComposableMap, {
@@ -47,7 +50,7 @@ function make$3(geography, projection, style, children) {
 
 var Geography = /* module */[/* make */make$3];
 
-var component = ReasonReact.statelessComponent("Map");
+var component = ReasonReact.reducerComponent("Map");
 
 function make$4() {
   return /* record */[
@@ -55,7 +58,11 @@ function make$4() {
           /* reactClassInternal */component[/* reactClassInternal */1],
           /* handedOffState */component[/* handedOffState */2],
           /* willReceiveProps */component[/* willReceiveProps */3],
-          /* didMount */component[/* didMount */4],
+          /* didMount */(function (self) {
+              return Fetcher$MyProjectName.fetchGet("https://immense-river-25513.herokuapp.com/locations", (function (data) {
+                            return Curry._1(self[/* send */3], /* Update */[data]);
+                          }));
+            }),
           /* didUpdate */component[/* didUpdate */5],
           /* willUnmount */component[/* willUnmount */6],
           /* willUpdate */component[/* willUpdate */7],
@@ -105,9 +112,13 @@ function make$4() {
                                                                       }), geographies);
                                                         })]))]))])));
             }),
-          /* initialState */component[/* initialState */10],
+          /* initialState */(function () {
+              return /* array */[];
+            }),
           /* retainedProps */component[/* retainedProps */11],
-          /* reducer */component[/* reducer */12],
+          /* reducer */(function (action, _) {
+              return /* Update */Block.__(0, [action[0]]);
+            }),
           /* subscriptions */component[/* subscriptions */13],
           /* jsElementWrapped */component[/* jsElementWrapped */14]
         ];

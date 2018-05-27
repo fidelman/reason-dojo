@@ -102,9 +102,25 @@ module Geography = {
     )
 }
 
-let component = ReasonReact.statelessComponent("Map");
+type state = array(Fetcher.data);
+
+type actions = | Update(array(Fetcher.data));
+
+let component = ReasonReact.reducerComponent("Map");
+
 let make = (_children) => {
   ...component,
+  initialState: () => [||],
+  reducer: (action, _state) =>
+    switch (action) {
+    | Update(users) => ReasonReact.Update(users)
+    },
+  didMount: (self) => {
+    let url = "https://immense-river-25513.herokuapp.com/locations";
+    Fetcher.fetchGet(url, (data) => {
+      self.send(Update(data));
+    });
+  },
   render: _self =>
     <div style={ReactDOMRe.Style.make(
       ~width = "100%",
